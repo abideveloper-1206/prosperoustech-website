@@ -85,42 +85,42 @@ export const SERVICES = {
   items: [
     {
       icon: "brain",
-      image: "/services/ai-powered-products.jpg",
+      image: "/services/ai_powered_products_1789739461717.jpg",
       title: "AI-Powered Products",
       description:
         "Intelligent systems that learn, adapt, and scale with your business needs.",
     },
     {
       icon: "globe",
-      image: "/services/saas-platforms.jpg",
+      image: "/services/saas_platforms_1789739477100.jpg",
       title: "SaaS Platforms",
       description:
         "Full-stack cloud applications built for growth and recurring revenue.",
     },
     {
       icon: "web",
-      image: "/services/web-applications.jpg",
+      image: "/services/web_applications_1789739491423.jpg",
       title: "Web Applications",
       description:
         "Modern, responsive web apps with exceptional user experiences.",
     },
     {
       icon: "mobile",
-      image: "/services/mobile-applications.jpg",
+      image: "/services/mobile_applications_1789739506690.jpg",
       title: "Mobile Applications",
       description:
         "Native and cross-platform mobile solutions for iOS and Android.",
     },
     {
       icon: "enterprise",
-      image: "/services/internal-enterprise-systems.jpg",
+      image: "/services/internal_enterprise_systems_1789739520121.jpg",
       title: "Internal Enterprise Systems",
       description:
         "Custom business tools and workflows that streamline operations.",
     },
     {
       icon: "data",
-      image: "/services/data-intelligence.jpg",
+      image: "/services/data_intelligence_1789739537973.jpg",
       title: "Data Intelligence",
       description:
         "Transform raw data into actionable insights and predictions.",
@@ -169,7 +169,10 @@ export const SHOWCASE = {
   heading: "Turning Ambitious Ideas Into Production-Ready Products",
   description:
     "Every engagement reflects our AI-first approach: intelligent products, scalable platforms, and long-term technical partnership for ambitious founders.",
-  items: [SERVICES.items[0], SERVICES.items[1]],
+  items: [
+    { ...SERVICES.items[0], image: "/services/featured_ai_1789739910918.jpg" },
+    { ...SERVICES.items[1], image: "/services/featured_saas_1789739926748.jpg" }
+  ],
 };
 
 export const CTA_BANNER = {
