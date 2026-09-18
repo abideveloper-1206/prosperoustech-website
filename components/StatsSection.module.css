@@ -12,7 +12,8 @@
 }
 
 .row {
-  max-width: 64rem;
+  width: 90%;
+  max-width: 100rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -10,7 +10,8 @@
 }
 
 .inner {
-  max-width: 72rem;
+  width: 90%;
+  max-width: 100rem;
   margin: 0 auto;
 }
 

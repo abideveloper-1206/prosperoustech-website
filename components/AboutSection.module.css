@@ -64,7 +64,8 @@
 .panel {
   position: relative;
   z-index: 1;
-  max-width: 56rem;
+  width: 90%;
+  max-width: 100rem;
   margin: 0 auto;
   border-radius: 2rem;
   border: 1px solid #e7e8f0;
