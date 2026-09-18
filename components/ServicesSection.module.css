@@ -1,0 +1,328 @@
+.section {
+  /* No `overflow: hidden` here on purpose — an ancestor with any overflow
+     value other than `visible` breaks `position: sticky` on descendants
+     (it stops sticking relative to the viewport entirely), which is
+     exactly what was disabling the card stack below. The decorative glows
+     get their own clipped wrapper instead (see .decor). */
+  position: relative;
+  background: #06070f;
+  padding: 5rem 1.25rem;
+  /* Inset + rounded, like we-brand's "Our Expertise"/stats section — a
+     dark card floating on the white page, not a full-bleed rectangle. The
+     horizontal margin is what makes the rounding actually visible: at
+     full viewport width there'd be no page color left showing at the
+     corners for the radius to reveal. */
+  margin: 0 0.75rem;
+  border-radius: 2rem;
+}
+@media (min-width: 640px) {
+  .section {
+    padding: 7rem 2.5rem;
+    margin: 0 1.5rem;
+    border-radius: 2.5rem;
+  }
+}
+
+.decor {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb,
+.orbSecondary {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb {
+  width: 30rem;
+  height: 30rem;
+  top: -10rem;
+  left: -8rem;
+  background: #4c6fff;
+}
+.orbSecondary {
+  width: 24rem;
+  height: 24rem;
+  bottom: -12rem;
+  right: -8rem;
+  background: #b14bff;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.headerBlock {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--body-muted);
+  opacity: 0;
+  transform: translateY(16px);
+  /* Short duration on purpose (see useInView call in ServicesSection.tsx
+     for the rootMargin half of this fix) — this section is tall enough,
+     and Lenis's scroll inertia slow enough, that a 600-650ms fade used to
+     leave a visible gap between "scrolled here" and "content appeared". */
+  transition:
+    opacity 280ms var(--ease-entrance),
+    transform 280ms var(--ease-entrance);
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+}
+.inView .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  margin-top: 0.75rem;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 280ms var(--ease-entrance) 40ms,
+    transform 280ms var(--ease-entrance) 40ms;
+}
+@media (min-width: 640px) {
+  .heading {
+    font-size: 2.75rem;
+  }
+}
+.inView .heading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.headingHighlight {
+  background: var(--brand-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subheading {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--body-muted);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 280ms var(--ease-entrance) 80ms,
+    transform 280ms var(--ease-entrance) 80ms;
+}
+.inView .subheading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Sticky "floating card" stack ---------- */
+.stackList {
+  margin-top: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.card {
+  /* Every card sticks at this same offset — that sameness is what makes
+     each one fully cover the previous card as it scrolls up underneath,
+     instead of leaving it peeking out above. */
+  position: sticky;
+  top: 5.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  align-items: center;
+  border-radius: 1.75rem;
+  border: 1px solid var(--glass-border);
+  background: #0b0c16;
+  padding: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 280ms var(--ease-entrance),
+    transform 280ms var(--ease-entrance),
+    box-shadow 300ms var(--ease-entrance),
+    border-color 300ms var(--ease-entrance);
+}
+.inView .card {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card:hover {
+  border-color: rgba(177, 75, 255, 0.35);
+  box-shadow: 0 30px 70px rgba(76, 111, 255, 0.16);
+}
+@media (min-width: 768px) {
+  .card {
+    top: 7rem;
+    grid-template-columns: 1.1fr 0.9fr;
+    padding: 2rem;
+  }
+}
+
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  aspect-ratio: 16 / 10;
+  background: #04050c;
+}
+
+.mediaImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.card:hover .mediaImg {
+  transform: scale(1.05);
+}
+
+/* Sits behind .mediaImg — once a real photo loads at that path it covers
+   this completely; until then, this is what's visible. */
+.mediaFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 120% at 20% 15%, rgba(177, 75, 255, 0.16) 0%, transparent 60%),
+    radial-gradient(120% 120% at 85% 90%, rgba(76, 111, 255, 0.16) 0%, transparent 60%);
+}
+.mediaFallbackIcon {
+  width: 3rem;
+  height: 3rem;
+  color: #9c7bff;
+}
+
+.mediaBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  border-radius: 9999px;
+  background: rgba(4, 5, 12, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.9rem;
+}
+
+.mediaExplore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+  color: #fff;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition:
+    opacity 260ms var(--ease-entrance),
+    transform 260ms var(--ease-entrance);
+}
+.mediaExplore svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+.card:hover .mediaExplore {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 0.25rem 0.25rem;
+}
+@media (min-width: 768px) {
+  .cardContent {
+    padding: 0 0.5rem;
+  }
+}
+
+.cardTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--heading);
+}
+@media (min-width: 640px) {
+  .cardTitle {
+    font-size: 1.65rem;
+  }
+}
+
+.cardDescription {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--body-muted);
+  max-width: 30rem;
+}
+
+.cardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--heading);
+  transition: gap 220ms var(--ease-entrance);
+}
+.cardCta svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 260ms var(--ease-entrance);
+}
+.card:hover .cardCta {
+  gap: 0.75rem;
+}
+.card:hover .cardCta svg {
+  transform: translateX(3px);
+}

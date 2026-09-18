@@ -1,0 +1,471 @@
+.nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  /* Only color/shape properties fade smoothly. left/right/top/width/
+     border-radius are intentionally NOT transitioned: animating a
+     full-width bar collapsing into a centered 700px pill read as a
+     jarring "sliding shut" motion, so that change now snaps instantly
+     and only the background/border/shadow crossfades. */
+  transition:
+    opacity 700ms var(--ease-entrance),
+    transform 700ms var(--ease-entrance),
+    background 320ms var(--ease-entrance),
+    border-color 320ms var(--ease-entrance),
+    padding 320ms var(--ease-entrance),
+    box-shadow 320ms var(--ease-entrance);
+}
+@media (min-width: 640px) {
+  .nav {
+    padding: 1.75rem 2.5rem;
+  }
+}
+.nav.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Condensed sticky state, once the page scrolls past the hero's top: the
+   bar shrinks into a narrow floating pill centered in the viewport (capped
+   at 700px, so it never gets close to full width), the full nav pill fades
+   out (see .navPill below), and the logo/CTA/menu-icon bar gets a
+   translucent backing so it stays legible over any section it floats over. */
+.nav.scrolled {
+  /* Centered via left:0/right:0 + width + auto margins, NOT transform —
+     transform stays reserved for the one-time load-in reveal above, so
+     the two never fight or compound into an odd combined transition. */
+  left: 0;
+  right: 0;
+  top: 0.75rem;
+  width: min(850px, calc(100vw - 1.5rem));
+  margin-inline: auto;
+  padding: 0.7rem 1.1rem;
+  border-radius: 9999px;
+  /* A true frosted-glass surface (light, translucent, blurred) rather than
+     a near-opaque dark bar — it needs to read well floating over both the
+     dark hero/stats/services sections AND the white About section, and a
+     blurred white tint works reasonably against either. */
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+@media (min-width: 640px) {
+  .nav.scrolled {
+    top: 1.25rem;
+    padding: 0.8rem 1.75rem;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--on-media);
+  letter-spacing: -0.01em;
+}
+@media (min-width: 640px) {
+  .brand {
+    font-size: 1.375rem;
+  }
+}
+
+.logoStack {
+  position: relative;
+  display: inline-flex;
+  height: 2.5rem;
+}
+@media (min-width: 640px) {
+  .logoStack {
+    height: 3.25rem;
+  }
+}
+
+.brandLogo {
+  height: 100%;
+  width: auto;
+  transition: opacity 220ms var(--ease-entrance);
+}
+
+/* Hidden by default; cross-fades in over the plain white logo once the
+   header is in its scrolled/glass state. A div (not the <img> itself) so a
+   flat background-color can be cut into the logo's shape via mask-image —
+   you can't paint a gradient "into" an <img>'s own decoded pixels. */
+.brandLogoTint {
+  position: absolute;
+  inset: 0;
+  background: var(--brand-gradient);
+  -webkit-mask-image: url("/logo-1.png");
+  mask-image: url("/logo-1.png");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  opacity: 0;
+  transition: opacity 220ms var(--ease-entrance);
+}
+
+.nav.scrolled .brandLogo {
+  opacity: 0;
+}
+.nav.scrolled .brandLogoTint {
+  opacity: 1;
+}
+
+.navPill {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3rem;
+  align-items: center;
+  gap: 2.25rem;
+  border-radius: 9999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  padding: 0 1.75rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 1;
+  pointer-events: auto;
+  transition:
+    opacity 260ms var(--ease-entrance),
+    transform 260ms var(--ease-entrance);
+}
+@media (min-width: 640px) {
+  .navPill {
+    display: flex;
+  }
+}
+.navPill a {
+  font-size: 0.95rem;
+  color: var(--body-muted);
+  white-space: nowrap;
+  transition: color var(--duration-fast) var(--ease-entrance);
+}
+.navPill a:hover {
+  color: var(--heading);
+}
+
+/* Full menu fades out once condensed; the dropdown trigger takes over. */
+.nav.scrolled .navPill {
+  opacity: 0;
+  transform: translate(-50%, -0.4rem);
+  pointer-events: none;
+}
+
+.pillBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: var(--action-inverse);
+  padding: 0 1.125rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--action-inverse-fg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background var(--duration-fast) var(--ease-entrance);
+  white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .pillBtn {
+    display: inline-flex;
+    height: 2.75rem;
+    padding: 0 1.375rem;
+    font-size: 0.95rem;
+  }
+}
+.pillBtn:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+.pillBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+/* Solid white always contrasts fine on its own, but in the scrolled/glass
+   header it reads as an unbranded gray blob — switch it to the brand
+   gradient with white text there so it matches the recolored logo/icon. */
+.nav.scrolled .pillBtn {
+  background: var(--brand-gradient);
+  color: #fff;
+}
+.nav.scrolled .pillBtn:hover {
+  filter: brightness(1.1);
+  background: var(--brand-gradient);
+}
+
+.actions {
+  display: none;
+}
+@media (min-width: 640px) {
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+/* ---------- Desktop condensed-state dropdown ---------- */
+.navDropdownWrap {
+  position: relative;
+  display: none;
+}
+@media (min-width: 640px) {
+  .nav.scrolled .navDropdownWrap {
+    display: flex;
+  }
+}
+
+.navToggle {
+  position: relative;
+  z-index: 60;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.desktopDropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 12rem;
+  border-radius: 1.1rem;
+  /* A frosted-glass tint, like the scrolled header bar, but noticeably
+     more opaque: at the header's lighter opacity, dark text/art from
+     whatever section is behind the menu (e.g. a card title) showed
+     through strongly enough to visually collide with the link labels. A
+     dropdown menu can afford to read as solid — it doesn't need to feel
+     like part of the page underneath it the way the header bar does. */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(248, 248, 252, 0.96);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  padding: 0.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: translateY(-0.5rem) scale(0.97);
+  pointer-events: none;
+  transition:
+    opacity 220ms var(--ease-entrance),
+    transform 260ms var(--ease-entrance);
+}
+.desktopDropdown.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.desktopDropdownLink {
+  display: block;
+  border-radius: 0.7rem;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #14141f;
+  opacity: 0;
+  transform: translateY(-0.35rem);
+  transition:
+    opacity 240ms var(--ease-entrance),
+    transform 240ms var(--ease-entrance),
+    background var(--duration-fast) var(--ease-entrance);
+}
+.desktopDropdown.open .desktopDropdownLink {
+  opacity: 1;
+  transform: translateY(0);
+}
+.desktopDropdownLink:hover,
+.desktopDropdownLink:focus-visible {
+  background: rgba(11, 11, 20, 0.08);
+  outline: none;
+}
+
+/* ---------- Mobile hamburger button ---------- */
+.menuButton {
+  position: relative;
+  z-index: 60;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.32rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+@media (min-width: 640px) {
+  .menuButton {
+    display: none;
+  }
+}
+
+.bar {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--on-media);
+  transition:
+    transform 280ms var(--ease-entrance),
+    opacity 200ms var(--ease-entrance),
+    width 280ms var(--ease-entrance),
+    background 220ms var(--ease-entrance);
+}
+
+/* Plain white bars would nearly vanish against the translucent glass
+   header once it's floating over a light section — recolor them to the
+   brand gradient there, same treatment as the logo and CTA. */
+.nav.scrolled .bar {
+  background: var(--brand-gradient);
+}
+
+.menuOpen .bar:nth-child(1) {
+  transform: translateY(0.42rem) rotate(45deg);
+}
+.menuOpen .bar:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+.menuOpen .bar:nth-child(3) {
+  transform: translateY(-0.42rem) rotate(-45deg);
+}
+
+/* ---------- Mobile menu backdrop + panel ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(4, 5, 12, 0.6);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms var(--ease-entrance);
+}
+.backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (min-width: 640px) {
+  .backdrop {
+    display: none;
+  }
+}
+
+.mobilePanel {
+  position: fixed;
+  z-index: 45;
+  top: 4.75rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--glass-border);
+  background: rgba(8, 9, 18, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(-0.75rem) scale(0.97);
+  pointer-events: none;
+  transition:
+    opacity 260ms var(--ease-entrance),
+    transform 320ms var(--ease-entrance);
+}
+.mobilePanel.open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+@media (min-width: 640px) {
+  .mobilePanel {
+    display: none;
+  }
+}
+
+.mobileLink {
+  display: block;
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  font-size: 1.05rem;
+  color: var(--heading);
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity 320ms var(--ease-entrance),
+    transform 320ms var(--ease-entrance),
+    background var(--duration-fast) var(--ease-entrance);
+}
+.mobilePanel.open .mobileLink {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobileLink:hover,
+.mobileLink:focus-visible {
+  background: var(--glass-fill);
+  outline: none;
+}
+
+.mobileCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.4rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: var(--action-inverse);
+  color: var(--action-inverse-fg);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition:
+    opacity 320ms var(--ease-entrance),
+    transform 320ms var(--ease-entrance),
+    background var(--duration-fast) var(--ease-entrance);
+}
+.mobilePanel.open .mobileCta {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobileCta:hover {
+  background: rgba(255, 255, 255, 0.85);
+}

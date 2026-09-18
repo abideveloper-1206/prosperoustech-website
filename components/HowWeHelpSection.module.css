@@ -1,0 +1,161 @@
+.section {
+  position: relative;
+  background: #06070f;
+  padding: 6rem 1.25rem 5rem;
+}
+@media (min-width: 640px) {
+  .section {
+    padding: 7rem 2.5rem 6rem;
+  }
+}
+
+.inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.headerBlock {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--body-muted);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms var(--ease-entrance),
+    transform 600ms var(--ease-entrance);
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+}
+.inView .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  margin-top: 0.75rem;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--heading);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 650ms var(--ease-entrance) 60ms,
+    transform 650ms var(--ease-entrance) 60ms;
+}
+@media (min-width: 640px) {
+  .heading {
+    font-size: 2.5rem;
+  }
+}
+.inView .heading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subheading {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--body-muted);
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 650ms var(--ease-entrance) 120ms,
+    transform 650ms var(--ease-entrance) 120ms;
+}
+.inView .subheading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Numbered step cards ---------- */
+.grid {
+  margin-top: 4.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem 1.5rem;
+}
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step {
+  position: relative;
+  padding-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms var(--ease-entrance),
+    transform 600ms var(--ease-entrance);
+}
+.inView .step {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The numbered circle overlaps the top edge of its card, like the Malgo
+   reference — half sitting above the card, half tucked behind it. */
+.badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(76, 111, 255, 0.35);
+}
+
+.card {
+  height: 100%;
+  border-radius: 1.5rem;
+  background: #f7f7fb;
+  padding: 2.5rem 1.5rem 1.75rem;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0b0b14;
+}
+
+.cardDescription {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #5c6270;
+}

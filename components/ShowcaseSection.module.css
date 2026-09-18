@@ -1,0 +1,161 @@
+.section {
+  --ink: #0b0b14;
+  --muted: #5c6270;
+
+  position: relative;
+  background: #ffffff;
+  padding: 5rem 1.25rem;
+}
+@media (min-width: 640px) {
+  .section {
+    padding: 7rem 2.5rem;
+  }
+}
+
+.inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .inner {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+  }
+}
+
+.text {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 650ms var(--ease-entrance),
+    transform 650ms var(--ease-entrance);
+}
+.inView .text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+}
+
+.heading {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+@media (min-width: 640px) {
+  .heading {
+    font-size: 2.5rem;
+  }
+}
+
+.description {
+  margin-top: 1.25rem;
+  max-width: 28rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- Offset image gallery ---------- */
+.gallery {
+  position: relative;
+  display: grid;
+  /* Single column on narrow phones — two side-by-side ~170px-wide cards
+     left the overlay text wrapping into a narrow, hard-to-read column. */
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms var(--ease-entrance) 120ms,
+    transform 700ms var(--ease-entrance) 120ms;
+}
+.inView .gallery {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 25px 60px rgba(15, 15, 40, 0.14);
+}
+@media (min-width: 560px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cardSecondary {
+  margin-top: 1.25rem;
+}
+@media (min-width: 560px) {
+  .cardSecondary {
+    margin-top: 2.5rem;
+  }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imageFallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 20% 10%, rgba(177, 75, 255, 0.35) 0%, transparent 55%),
+    radial-gradient(120% 120% at 85% 90%, rgba(76, 111, 255, 0.35) 0%, transparent 55%),
+    #14141f;
+}
+
+.overlay {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  border-radius: 1.1rem;
+  background: rgba(11, 11, 20, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 1.1rem;
+  color: #fff;
+}
+.overlay h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.overlay p {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}

@@ -1,0 +1,69 @@
+:root {
+  --hero-base: #04050c;
+  --heading: #eef0f6;
+  --body-muted: #9ba4b5;
+  --on-media: #ffffff;
+  --action-inverse: #ffffff;
+  --action-inverse-fg: #2f2f33;
+  --glass-fill: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --scrim: rgba(4, 5, 12, 0.46);
+  --scrim-strong: rgba(4, 5, 12, 0.68);
+  --scrim-soft: rgba(4, 5, 12, 0.12);
+  /* Violet-to-blue, picked to sit on the same palette as the hero's
+     fluid background (violet/magenta blobs bleeding into blue). */
+  --brand-gradient: linear-gradient(90deg, #b14bff, #4c6fff);
+  --duration-fast: 150ms;
+  --brand--dark :radial-gradient(120% 120% at 20% 10%, rgba(177, 75, 255, 0.35) 0%, transparent 55%), radial-gradient(120% 120% at 85% 90%, rgba(76, 111, 255, 0.35) 0%, transparent 55%), #14141f;
+  --ease-entrance: cubic-bezier(0.2, 0, 0, 1);
+}
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  border: none;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 1920px) {
+  html {
+    font-size: 0.833333vw;
+  }
+}
+@media (max-width: 1440px) {
+  html {
+    font-size: 1.111111vw;
+  }
+}
+@media (max-width: 1024px) {
+  html {
+    font-size: 1.5625vw;
+  }
+}
+@media (max-width: 640px) {
+  html {
+    font-size: 4.444444vw;
+  }
+}
+
+body {
+  background: var(--hero-base);
+  color: var(--heading);
+  overflow-x: hidden;
+  font-family: "Onest", sans-serif;
+}
