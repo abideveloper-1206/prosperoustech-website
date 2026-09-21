@@ -13,8 +13,7 @@
 }
 
 .inner {
-  width: 90%;
-  max-width: 100rem;
+  max-width: 72rem;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;

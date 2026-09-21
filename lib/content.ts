@@ -253,3 +253,63 @@ export const FAQ = {
     },
   ],
 };
+
+// Sourced from the footer on https://prosperoustech.com.
+export const FOOTER = {
+  tagline: "Engineering Prosperity Through AI",
+  description:
+    "ProsperousTech is an AI-first engineering studio that partners with ambitious founders to transform technical visions into production-ready products.",
+  contact: {
+    email: "info@prosperoustech.com",
+    phone: "+91 6369964058",
+    address: "94/15, SKV Complex 1st Floor, Sathyamoorthy Nagar, Madurai 625016",
+  },
+  social: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/prosperoustech/" },
+    { label: "Instagram", href: "https://www.instagram.com/prosperous_tech/" },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/people/ProsperousTech/61560707532170/",
+    },
+  ],
+  columns: [
+    {
+      title: "Services",
+      links: [
+        { label: "AI & SaaS Platforms", href: "#services" },
+        { label: "Cloud Infrastructure", href: "#services" },
+        { label: "DevOps & Support", href: "#services" },
+        { label: "Technical Partnership", href: "#why" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "About Us", href: "#about" },
+        { label: "Case Studies", href: "#case-studies" },
+        { label: "Contact", href: "#contact" },
+      ],
+    },
+  ],
+  copyright: `© ${new Date().getFullYear()} ProsperousTech. All rights reserved.`,
+};
+
+// No "Trusted By" / client-logo section exists anywhere on
+// prosperoustech.com (checked the homepage directly) — there are no real
+// client names or logos to show yet. Rather than fabricate client trust
+// claims, this reuses the we-brand reference's icon-marquee STYLE but
+// relabels it around real, already-sourced capabilities (the same six
+// services from ServicesSection) instead of unverified client logos.
+export const CAPABILITIES_MARQUEE = {
+  eyebrow: "What We Work With",
+  items: [
+    "AI-Powered Products",
+    "SaaS Platforms",
+    "Web Applications",
+    "Mobile Applications",
+    "Cloud Infrastructure",
+    "Data Intelligence",
+    "DevOps & Support",
+    "Technical Partnership",
+  ],
+};

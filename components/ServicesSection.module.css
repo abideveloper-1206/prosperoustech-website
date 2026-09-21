@@ -58,8 +58,7 @@
 .inner {
   position: relative;
   z-index: 1;
-  width: 90%;
-  max-width: 100rem;
+  max-width: 72rem;
   margin: 0 auto;
 }
 

@@ -8,6 +8,8 @@ import ShowcaseSection from "@/components/ShowcaseSection";
 import HowWeHelpSection from "@/components/HowWeHelpSection";
 import FaqSection from "@/components/FaqSection";
 import CtaBanner from "@/components/CtaBanner";
+import CapabilitiesMarquee from "@/components/CapabilitiesMarquee";
+import SiteFooter from "@/components/SiteFooter";
 
 export default function Home() {
   return (
@@ -22,11 +24,8 @@ export default function Home() {
       <HowWeHelpSection />
       <FaqSection />
       <CtaBanner />
-
-      {/*
-        Next up:
-        <SiteFooter />
-      */}
+      <CapabilitiesMarquee />
+      <SiteFooter />
     </>
   );
 }

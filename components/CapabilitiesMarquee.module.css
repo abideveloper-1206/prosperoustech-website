@@ -1,0 +1,106 @@
+.section {
+  background: #ffffff;
+  padding: 1rem 0 4rem;
+  overflow: hidden;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5c6270;
+  margin-bottom: 2rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+}
+
+.marquee {
+  position: relative;
+  width: 100%;
+  /* Fade the row out at both edges instead of a hard clip. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+}
+
+/* Same technique as we-brand's .wave-track: the list is rendered twice
+   and the track scrolls exactly -50%, so the loop point is invisible. */
+.track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  animation: marquee-scroll 32s linear infinite;
+  will-change: transform;
+}
+.track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
+
+.pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 9999px;
+  background: #f7f7fb;
+  border: 1px solid #e7e8f0;
+  padding: 0.6rem 1.25rem 0.6rem 0.6rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: var(--brand-gradient);
+  color: #fff;
+}
+.iconWrap svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.label {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #0b0b14;
+  white-space: nowrap;
+}
